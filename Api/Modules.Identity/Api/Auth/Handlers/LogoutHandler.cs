@@ -3,10 +3,13 @@ using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Shared;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Modules.Identity.Api.Auth.Handlers;
 
-[Get("/auth/logout")]
+[Authorize]
+[Get("/auth/logout", "/auth/signout")]
 public class LogoutHandler(IHttpContextAccessor httpContextAccessor) : CommandHandler
 {
     public override async Task<IResult> Validate()

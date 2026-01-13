@@ -18,4 +18,8 @@
 		<ProjectReference Include="..\Logger\Logger.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Pages\" />
+	</ItemGroup>
+
 </Project>
