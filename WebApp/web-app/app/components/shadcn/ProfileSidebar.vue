@@ -66,42 +66,42 @@ const data = {
       url: "/app/dashboard",
       icon: ChartArea,
     },
-    {
-      title: "Organization",
-      url: "/app/organization",
-      icon: Building2,
-    },
-    {
-      title: "Workspace",
-      url: "/app/workspace",
-      icon: Folder,
-    },
-    {
-      title: "Applications",
-      url: "/app/application",
-      icon: LucideLayoutGrid,
-    },
-    {
-      title: "Clients",
-      url: "/app/client",
-      icon: FolderTree,
-    },
-    {
-      title: "User Managements",
-      url: "#",
-      icon: Users,
-      isActive: true,
-      items: [
-        {
-          title: "Users",
-          url: "/app/user-management/user",
-        },
-        {
-          title: "Roles",
-          url: "/app/user-management/role",
-        },
-      ],
-    },
+    // {
+    //   title: "Organization",
+    //   url: "/app/organization",
+    //   icon: Building2,
+    // },
+    // {
+    //   title: "Workspace",
+    //   url: "/app/workspace",
+    //   icon: Folder,
+    // },
+    // {
+    //   title: "Applications",
+    //   url: "/app/application",
+    //   icon: LucideLayoutGrid,
+    // },
+    // {
+    //   title: "Clients",
+    //   url: "/app/client",
+    //   icon: FolderTree,
+    // },
+    // {
+    //   title: "User Managements",
+    //   url: "#",
+    //   icon: Users,
+    //   isActive: true,
+    //   items: [
+    //     {
+    //       title: "Users",
+    //       url: "/app/user-management/user",
+    //     },
+    //     {
+    //       title: "Roles",
+    //       url: "/app/user-management/role",
+    //     },
+    //   ],
+    // },
   ],
   projects: [
     {

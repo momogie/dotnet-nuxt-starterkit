@@ -34,7 +34,7 @@ defineProps<{
 
 <template>
   <SidebarGroup>
-    <SidebarGroupLabel>Platform</SidebarGroupLabel>
+    <SidebarGroupLabel>Features</SidebarGroupLabel>
     <SidebarMenu>
       <template v-for="item in items" :key="item.title">
         <SidebarMenuItem v-if="(item.items?.length || 0) == 0">
