@@ -11,6 +11,7 @@
       :sort-list="[]"
       :actions="[
         { label: 'Edit', icon: 'ph:note-pencil-bold', onClick: (v) => edit(v)},
+        { label: 'Permissions', icon: 'ph:note-pencil-bold', onClick: (v) => editPermission(v)},
         { type: 'separator'},
         // { label: 'Activate', icon: 'ph:check-circle-bold', visible: (v) => !v.IsActive, onClick: (v) => activate(v.Id, true)},
         // { label: 'Deactivate', icon: 'ph:x-circle-bold', visible: (v) => v.IsActive, onClick: (v) => activate(v.Id, false)},
@@ -21,14 +22,16 @@
     />
     <Create />
     <Edit :data="selectedItem" />
+    <Permission :data="selectedItem" />
   </div>
 </template>
 
 <script>
 import Create from './create.x.vue'
 import Edit from './edit.x.vue'
+import Permission from './permission.x.vue'
 export default {
-  components: { Create, Edit },
+  components: { Create, Edit, Permission },
   data: () => ({
     selectedItem: {},
   }),
@@ -51,6 +54,13 @@ export default {
         this.selectedItem = v;
       return new Promise((resolve, reject) => {
         this.$modal.show('edit')
+        resolve();
+      })
+    },
+    editPermission: function(v) {
+        this.selectedItem = v;
+      return new Promise((resolve, reject) => {
+        this.$modal.show('permission')
         resolve();
       })
     },

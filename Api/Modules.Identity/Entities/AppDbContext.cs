@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Modules.Identity.Entities.DbSchemas;
 using PluralizeService.Core;
+using System.Reflection.Emit;
 using System.Text;
 
 namespace Modules.Identity.Entities;
@@ -25,8 +26,15 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
 
     public DbView Views => new (this, "");
 
+    private string Schema => "Idp";
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        if (!string.IsNullOrWhiteSpace(Schema))
+        {
+            builder.HasDefaultSchema(Schema);
+            builder.Ignore<__ReparationHistory>();
+        }
         //modelBuilder.Entity<Preference>(entity =>
         //{
         //    entity.HasNoKey();

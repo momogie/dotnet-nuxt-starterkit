@@ -11,8 +11,26 @@ namespace Modules.Identity.Entities.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "Idp");
+
+            migrationBuilder.CreateTable(
+                name: "Preferences",
+                schema: "Idp",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Key = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Preferences", x => x.UserId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "RefreshTokens",
+                schema: "Idp",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
@@ -28,6 +46,7 @@ namespace Modules.Identity.Entities.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Roles",
+                schema: "Idp",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -42,6 +61,7 @@ namespace Modules.Identity.Entities.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Users",
+                schema: "Idp",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -71,6 +91,7 @@ namespace Modules.Identity.Entities.Migrations
 
             migrationBuilder.CreateTable(
                 name: "RoleClaims",
+                schema: "Idp",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -85,6 +106,7 @@ namespace Modules.Identity.Entities.Migrations
                     table.ForeignKey(
                         name: "FK_RoleClaims_Roles_RoleId",
                         column: x => x.RoleId,
+                        principalSchema: "Idp",
                         principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -92,6 +114,7 @@ namespace Modules.Identity.Entities.Migrations
 
             migrationBuilder.CreateTable(
                 name: "UserClaims",
+                schema: "Idp",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -106,6 +129,7 @@ namespace Modules.Identity.Entities.Migrations
                     table.ForeignKey(
                         name: "FK_UserClaims_Users_UserId",
                         column: x => x.UserId,
+                        principalSchema: "Idp",
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -113,6 +137,7 @@ namespace Modules.Identity.Entities.Migrations
 
             migrationBuilder.CreateTable(
                 name: "UserLogins",
+                schema: "Idp",
                 columns: table => new
                 {
                     LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -126,6 +151,7 @@ namespace Modules.Identity.Entities.Migrations
                     table.ForeignKey(
                         name: "FK_UserLogins_Users_UserId",
                         column: x => x.UserId,
+                        principalSchema: "Idp",
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -133,6 +159,7 @@ namespace Modules.Identity.Entities.Migrations
 
             migrationBuilder.CreateTable(
                 name: "UserRoles",
+                schema: "Idp",
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -144,12 +171,14 @@ namespace Modules.Identity.Entities.Migrations
                     table.ForeignKey(
                         name: "FK_UserRoles_Roles_RoleId",
                         column: x => x.RoleId,
+                        principalSchema: "Idp",
                         principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UserRoles_Users_UserId",
                         column: x => x.UserId,
+                        principalSchema: "Idp",
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -157,6 +186,7 @@ namespace Modules.Identity.Entities.Migrations
 
             migrationBuilder.CreateTable(
                 name: "UserTokens",
+                schema: "Idp",
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -170,6 +200,7 @@ namespace Modules.Identity.Entities.Migrations
                     table.ForeignKey(
                         name: "FK_UserTokens_Users_UserId",
                         column: x => x.UserId,
+                        principalSchema: "Idp",
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -177,11 +208,13 @@ namespace Modules.Identity.Entities.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoleClaims_RoleId",
+                schema: "Idp",
                 table: "RoleClaims",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
+                schema: "Idp",
                 table: "Roles",
                 column: "NormalizedName",
                 unique: true,
@@ -189,26 +222,31 @@ namespace Modules.Identity.Entities.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserClaims_UserId",
+                schema: "Idp",
                 table: "UserClaims",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserLogins_UserId",
+                schema: "Idp",
                 table: "UserLogins",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserRoles_RoleId",
+                schema: "Idp",
                 table: "UserRoles",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
+                schema: "Idp",
                 table: "Users",
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
+                schema: "Idp",
                 table: "Users",
                 column: "NormalizedUserName",
                 unique: true,
@@ -219,28 +257,40 @@ namespace Modules.Identity.Entities.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "RefreshTokens");
+                name: "Preferences",
+                schema: "Idp");
 
             migrationBuilder.DropTable(
-                name: "RoleClaims");
+                name: "RefreshTokens",
+                schema: "Idp");
 
             migrationBuilder.DropTable(
-                name: "UserClaims");
+                name: "RoleClaims",
+                schema: "Idp");
 
             migrationBuilder.DropTable(
-                name: "UserLogins");
+                name: "UserClaims",
+                schema: "Idp");
 
             migrationBuilder.DropTable(
-                name: "UserRoles");
+                name: "UserLogins",
+                schema: "Idp");
 
             migrationBuilder.DropTable(
-                name: "UserTokens");
+                name: "UserRoles",
+                schema: "Idp");
 
             migrationBuilder.DropTable(
-                name: "Roles");
+                name: "UserTokens",
+                schema: "Idp");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Roles",
+                schema: "Idp");
+
+            migrationBuilder.DropTable(
+                name: "Users",
+                schema: "Idp");
         }
     }
 }

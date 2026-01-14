@@ -8,7 +8,7 @@ public static class Extensions
 {
     public static IServiceCollection AddModuleIdentity(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<AppDbContext>(p => p.UseSqlServer(configuration.GetConnectionString("Default")));
+        services.AddDbContext<AppDbContext>(p => p.UseSqlServer(configuration.GetConnectionString("Identity")));
         services.AddRazorPages()
                 .AddApplicationPart(typeof(Modules.Identity.Extensions).Assembly);
 

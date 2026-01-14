@@ -17,6 +17,7 @@ namespace Modules.Identity.Entities.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("Idp")
                 .HasAnnotation("ProductVersion", "10.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
@@ -37,7 +38,7 @@ namespace Modules.Identity.Entities.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Preferences");
+                    b.ToTable("Preferences", "Idp");
                 });
 
             modelBuilder.Entity("Modules.Identity.Entities.DbSchemas.RefreshToken", b =>
@@ -61,7 +62,7 @@ namespace Modules.Identity.Entities.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RefreshTokens", (string)null);
+                    b.ToTable("RefreshTokens", "Idp");
                 });
 
             modelBuilder.Entity("Modules.Identity.Entities.DbSchemas.Role", b =>
@@ -88,7 +89,7 @@ namespace Modules.Identity.Entities.Migrations
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles", "Idp");
                 });
 
             modelBuilder.Entity("Modules.Identity.Entities.DbSchemas.RoleClaim", b =>
@@ -113,7 +114,7 @@ namespace Modules.Identity.Entities.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("RoleClaims", (string)null);
+                    b.ToTable("RoleClaims", "Idp");
                 });
 
             modelBuilder.Entity("Modules.Identity.Entities.DbSchemas.User", b =>
@@ -193,7 +194,7 @@ namespace Modules.Identity.Entities.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users", "Idp");
                 });
 
             modelBuilder.Entity("Modules.Identity.Entities.DbSchemas.UserClaim", b =>
@@ -218,7 +219,7 @@ namespace Modules.Identity.Entities.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserClaims", (string)null);
+                    b.ToTable("UserClaims", "Idp");
                 });
 
             modelBuilder.Entity("Modules.Identity.Entities.DbSchemas.UserLogin", b =>
@@ -240,7 +241,7 @@ namespace Modules.Identity.Entities.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserLogins", (string)null);
+                    b.ToTable("UserLogins", "Idp");
                 });
 
             modelBuilder.Entity("Modules.Identity.Entities.DbSchemas.UserRole", b =>
@@ -255,7 +256,7 @@ namespace Modules.Identity.Entities.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("UserRoles", (string)null);
+                    b.ToTable("UserRoles", "Idp");
                 });
 
             modelBuilder.Entity("Modules.Identity.Entities.DbSchemas.UserToken", b =>
@@ -274,7 +275,7 @@ namespace Modules.Identity.Entities.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("UserTokens", (string)null);
+                    b.ToTable("UserTokens", "Idp");
                 });
 
             modelBuilder.Entity("Modules.Identity.Entities.DbSchemas.RoleClaim", b =>
