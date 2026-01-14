@@ -5,7 +5,10 @@ import {
   Forward,
   MoreHorizontal,
   Trash2,
-  MonitorCog
+  MonitorCog,
+  Cog,
+  UserCog,
+  FileText
 } from "lucide-vue-next"
 
 import {
@@ -27,13 +30,18 @@ import {
 
 
 const { isMobile } = useSidebar()
+const list = [
+  {name: 'User Managements', url: '/app/user-management/user', icon: UserCog},
+  {name: 'Settings', url: '/app/setting', icon: Cog},
+  {name: 'Logs', url: '/app/log', icon: FileText},
+]
 </script>
 
 <template>
   <SidebarGroup class="group-data-[collapsible=icon]:hidden">
-    <SidebarGroupLabel>Settings</SidebarGroupLabel>
+    <SidebarGroupLabel>Admin Console</SidebarGroupLabel>
     <SidebarMenu>
-      <SidebarMenuItem v-for="item in [{name: 'User Managements', url: '', icon: MonitorCog}]" :key="item.name">
+      <SidebarMenuItem v-for="item in list" :key="item.name">
         <SidebarMenuButton as-child>
           <a :href="item.url">
             <component :is="item.icon" />
@@ -75,5 +83,6 @@ const { isMobile } = useSidebar()
         </SidebarMenuButton>
       </SidebarMenuItem> -->
     </SidebarMenu>
+    <div class="p-2"></div>
   </SidebarGroup>
 </template>

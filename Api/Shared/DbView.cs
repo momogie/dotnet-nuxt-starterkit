@@ -639,14 +639,13 @@ public class DbView
 
 public class RequestParameter
 {
-
     public int? Page { get; set; } = 1;
     public int? Length { get; set; } = 10;
-    public Dictionary<string, string> Sorts { get; set; } = new Dictionary<string, string>();
+    public Dictionary<string, string> Sorts { get; set; } = [];
     //public List<object[]> Filters { get; set; } = new List<object[]>();
     public JsonElement[] Filters { get; set; } = [];
-    public string[] Fields { get; set; } = Array.Empty<string>();
-    public bool SingleResult { get; set; } = false;
+    public string[] Fields { get; set; } = [];
+    //public bool SingleResult { get; set; } = false;
 
     public void AddFilter(string key, string opr, string value)
     {

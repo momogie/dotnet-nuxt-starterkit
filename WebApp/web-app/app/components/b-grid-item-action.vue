@@ -5,7 +5,9 @@
 <template>
   <DropdownMenu>
     <DropdownMenuTrigger as-child>
-      <Icon name="ph:dots-three-outline-fill" size="16" />
+      <div class="w-5 -my-2">
+        <Icon name="ph:dots-three-outline-fill" size="16" />
+      </div>
     </DropdownMenuTrigger>
     <DropdownMenuContent class="w-56 mr-10">
       <DropdownMenuLabel>Actions</DropdownMenuLabel>

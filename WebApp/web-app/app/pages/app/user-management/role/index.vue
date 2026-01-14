@@ -1,31 +1,23 @@
 <template>
   <div>
-    <b-grid-url
-      url="/api/organization/list"
-      store-key="tenant-list"
+    <b-grid
+      source="Role"
       :buttons="[
         { label: 'ADD NEW', icon: 'ph:plus', showOnChecked: false, onClick: create},
         // { type: 'separator', showOnChecked: true},
         // { label: 'DELETE', icon: 'ph:trash-bold', showOnChecked: true, onClick: remove},
       ]"
-      :columns="[
-        { key: 'Code', label: 'Code', searchable: true,},
-        { key: 'Name', label: 'Name', searchable: true,},
-        { key: 'Description', label: 'Description', searchable: true,},
-        { key: 'IsActive', label: 'Active', type: 'check'},
-        { key: 'CreatedAt', label: 'Created At', type: 'datetime'},
-      ]"
-      :default-filter="[
-      ]"
+      :default-filter="[]"
       :sort-list="[]"
       :actions="[
         { label: 'Edit', icon: 'ph:note-pencil-bold', onClick: (v) => edit(v)},
         { type: 'separator'},
-        { label: 'Activate', icon: 'ph:check-circle-bold', visible: (v) => !v.IsActive, onClick: (v) => activate(v.Id, false)},
-        { label: 'Deactivate', icon: 'ph:x-circle-bold', visible: (v) => v.IsActive, onClick: (v) => activate(v.Id, true)},
-        { type: 'separator'},
+        // { label: 'Activate', icon: 'ph:check-circle-bold', visible: (v) => !v.IsActive, onClick: (v) => activate(v.Id, true)},
+        // { label: 'Deactivate', icon: 'ph:x-circle-bold', visible: (v) => v.IsActive, onClick: (v) => activate(v.Id, false)},
+        // { type: 'separator'},
         { label: 'Delete', icon: 'ph:trash-bold', onClick: (v) => remove(v.Id)},
       ]"
+      backable
     />
     <Create />
     <Edit :data="selectedItem" />
@@ -46,7 +38,7 @@ export default {
     }
   },
   mounted: function() {
-    this.app.setMenus([{Title: 'Tenants'}])
+    this.app.setMenus([{Title: 'User Managements'}, { Title: 'Roles'}])
   },
   methods: {
     create: function() {
@@ -64,11 +56,11 @@ export default {
     },
     activate: function(v, y) {
       return new Promise((resolve, reject) => {
-        this.$swal.confirm(y ? 'Deactivate Tenant' : 'Activate Tenant')
+        this.$swal.confirm(y ? 'Activate User' : 'Deactivate User')
           .then(() => {
-              this.$http.patch('/organization/activation?id='+ v)
+              this.$http.patch('/identity/user/activation?id='+ v, { IsActive: y})
                 .then(() => {
-                  useGridUrl('tenant-list')().load();
+                  useDataSource().load();
                   resolve();
                 })
                 .catch(err => {
@@ -85,9 +77,9 @@ export default {
       return new Promise((resolve, reject) => {
         this.$swal.confirmDelete()
           .then(() => {
-              this.$http.delete('/organization/remove?id='+ v)
+              this.$http.delete('/identity/role/remove?id='+ v)
                 .then(() => {
-                  useGridUrl('tenant-list')().load();
+                  useDataSource().load();
                   resolve();
                 })
                 .catch(err => {

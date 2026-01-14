@@ -11,6 +11,11 @@ export default defineNuxtConfig({
       baseUrl: '/api'    //
     }
   },
+  app: {
+    head: {
+      title: 'Starter'
+    }
+  },
   modules: [
     '@nuxt/icon', 'shadcn-nuxt', '@pinia/nuxt'
   ],

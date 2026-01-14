@@ -1,30 +1,34 @@
 ﻿using Dapper;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Storage;
 using PluralizeService.Core;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Data;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Shared;
 
 public abstract class ModuleDbContext : DbContext
 {
+    public static Dictionary<string, (string schema, Type type)> ViewList = new Dictionary<string, (string schema, Type type)>();
+    public static Dictionary<string, (string schema, Type type)> ExportViewList = new Dictionary<string, (string schema, Type type)>();
+
     public abstract string Schema { get; }
-
-    //protected virtual string ViewDbPrefix { get; private set; }
-
-    protected string ViewDbPrefix { get; set; }
 
     private IDbConnection Connection => Database.GetDbConnection();
 
     protected ModuleDbContext(DbContextOptions options) : base(options)
     {
+    }
+
+    public static void RegisterView(string schema, Type type, Type[] excludedTypes)
+    {
+        if (excludedTypes.Contains(type))
+            return;
+
+        if (ViewList.ContainsKey(type.Name))
+            throw new Exception($"View type with name {type.Name} is already registered");
+
+        ViewList.Add(type.Name, (schema, type));
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -37,11 +41,6 @@ public abstract class ModuleDbContext : DbContext
 
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
-    }
-
-    public void SetDbPrefix (string dbPrefix)
-    {
-        ViewDbPrefix = dbPrefix;
     }
 
     public void InitializeViews()
@@ -58,9 +57,8 @@ public abstract class ModuleDbContext : DbContext
             var sqlLines = System.IO.File.ReadAllLines(fileNames, Encoding.UTF8);
             var sql = string.Join(Environment.NewLine, sqlLines);
 
-            sql = sql.Replace("[db_prefix]", ViewDbPrefix);
 
-            Views.Execute($"CREATE OR ALTER VIEW {Schema}_{PluralizationProvider.Pluralize(r.Name)} AS {sql}");
+            Views.Execute($"CREATE OR ALTER VIEW {PluralizationProvider.Pluralize(r.Name)} AS {sql}");
         }
     }
 

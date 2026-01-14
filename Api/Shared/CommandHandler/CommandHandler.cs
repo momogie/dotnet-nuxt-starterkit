@@ -41,18 +41,6 @@ public abstract class CommandHandler : ICommandHandler, IDisposable
         return ServiceProvider = serviceProvider;
     }
 
-    protected string UserCode
-    {
-        get
-        {
-            var empId = HttpContext.User.FindFirst("UserCode")?.Value;
-            if (empId == null)
-                return null;
-
-            return empId;
-        }
-    }
-
     protected string EmployeeCode
     {
         get
@@ -70,12 +58,6 @@ public abstract class CommandHandler : ICommandHandler, IDisposable
         get
         {
             return HttpContext.User.FindFirst("UserId")?.Value;
-            //if (usrId == null)
-            //    return -1;
-
-            //_ = long.TryParse(usrId, out long userId);
-
-            //return userId;
         }
     }
 

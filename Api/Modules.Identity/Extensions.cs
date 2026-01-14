@@ -1,12 +1,6 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OAuth;
+﻿using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Modules.Identity.Entities;
-using Modules.Identity.Entities.DbSchemas;
 
 namespace Modules.Identity;
 
@@ -111,9 +105,10 @@ public static class Extensions
         using var scope = app.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
         db.Database.Migrate();
-        //var name = typeof(Extensions).Namespace;
-        //foreach (Type r in typeof(Extensions).Assembly.GetExportedTypes().Where(p => p.GetCustomAttributes(true).Any(c => c.GetType() == typeof(SqlView))))
-        //    cherryDb.RegisterView(db.Schema, r);
+        db.InitializeViews();
+        var name = typeof(Extensions).Namespace;
+        foreach (Type r in typeof(Extensions).Assembly.GetExportedTypes().Where(p => p.GetCustomAttributes(true).Any(c => c.GetType() == typeof(SqlView))))
+            ModuleDbContext.RegisterView("", r, []);
 
     }
 }

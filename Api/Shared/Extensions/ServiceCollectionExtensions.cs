@@ -47,7 +47,7 @@ public static class ServiceCollectionExtensions
 #else
         catch { }
 #endif
-        dbContext.SetDbPrefix(config["DbPrefix"]);
+        //dbContext.SetDbPrefix(config["DbPrefix"]);
         dbContext.InitializeViews();
         return services;
     }

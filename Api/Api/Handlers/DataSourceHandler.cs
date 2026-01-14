@@ -6,17 +6,17 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Api.Handlers;
 
-[Authorize]
+//[Authorize]
 [Post("/api/data-source")]
-public class DataSourceHandler(AppDbContext appDb, [FromBody] DataSourceRequest request) : CommandHandler
+public class DataSourceHandler([FromServices]AppDbContext appDb, [FromBody] DataSourceRequest request) : CommandHandler
 {
     protected Type Type { get; set; }
 
-    public override JsonSerializerSettings JsonSerializerSettings 
+    public override JsonSerializerSettings JsonSerializerSettings
     {
         get
         {
-            if(request.Fields == null || request.Fields.Length == 0)
+            if (request.Fields == null || request.Fields.Length == 0)
                 return default;
 
             var resolver = new JsonIgnoreResolver();

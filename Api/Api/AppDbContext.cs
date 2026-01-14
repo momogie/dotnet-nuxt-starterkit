@@ -10,7 +10,5 @@ public class AppDbContext : ModuleDbContext
 
     }
 
-    public static Dictionary<string, (string schema, Type type)> ViewList = new Dictionary<string, (string schema, Type type)>();
-    public static Dictionary<string, (string schema, Type type)> ExportViewList = new Dictionary<string, (string schema, Type type)>();
     public override string Schema => "dbo";
 }

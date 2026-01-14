@@ -32,11 +32,7 @@ import {
 import NavSettings from "./NavSettings.vue"
 
 const props = defineProps<{
-  user: {
-    name: string
-    email: string
-    avatar: string
-  }
+  
 }>()
 
 const { isMobile } = useSidebar()

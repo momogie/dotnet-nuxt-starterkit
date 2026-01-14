@@ -67,6 +67,7 @@ public class SignInModel(IConfiguration configuration, AppDbContext appDb, IMail
                 PasswordHash = SHA256Hash(Password),
                 EmailConfirmed = true,
                 Email =  Username,
+                IsActive = true,
             };
             appDb.Users.Add(user);
             appDb.SaveChanges();

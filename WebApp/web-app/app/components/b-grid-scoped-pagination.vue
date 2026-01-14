@@ -3,22 +3,22 @@
     <div>
       <div class="flex-1 text-sm text-muted-foreground">
         Showing 
-        {{(ds.data.Page * ds.data.Length) - ds.data.Length + 1 }}
+        {{(ds.filter.pageNumber * ds.filter.maximumResult) - ds.filter.maximumResult + 1 }}
         to 
-        <span v-if="ds.data.Filtered > ds.data.Page * ds.data.Length">
-          {{ds.data.Page * ds.data.Length}} 
+        <span v-if="ds.data.totalRows > ds.filter.pageNumber * ds.filter.maximumResult">
+          {{ds.filter.pageNumber * ds.filter.maximumResult}} 
         </span>
         <span v-else>
-          {{ds.data.Filtered}}
+          {{ds.data.totalRows}}
         </span>
-        of {{ds.data.Filtered}} row(s). 
+        of {{ds.data.totalRows}} row(s). 
       </div>
     </div>
     <div class="flex">
       <div>
-        <Select :placeholder="ds.data.Length || 25" >
+        <Select :placeholder="ds.filter?.maximumResult || 25" >
           <SelectTrigger>
-            <SelectValue :placeholder="`${ds.data.Length || 25}`" />
+            <SelectValue :placeholder="`${ds.filter?.maximumResult || 25}`" />
           </SelectTrigger>
           <SelectContent>
             <SelectItem :value="item" v-for="(item, i) in [10, 25, 50, 100]"
@@ -30,9 +30,9 @@
         </Select>
       </div>
       <Pagination v-slot="{ page }" 
-        :items-per-page="ds.data.Length" 
+        :items-per-page="ds.filter.maximumResult" 
         :total="ds.data.totalRows" 
-        :default-page="ds.data.Page"
+        :default-page="ds.filter.pageNumber"
         @update:page="(v) => ds.setPage(v)"
       >
         <PaginationContent v-slot="{ items }">
@@ -57,12 +57,9 @@
 </template>
 
 <script>
+import { useGridSource } from '~/stores/grid-source';
 
 export default {
-  computed: {
-    ds: function() {
-      return useDataSource();
-    }
-  }
+  props: ['ds'],
 }
 </script>

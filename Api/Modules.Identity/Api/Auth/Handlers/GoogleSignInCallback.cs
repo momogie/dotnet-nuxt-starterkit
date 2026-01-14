@@ -42,10 +42,11 @@ public class GoogleSignInCallback(AppDbContext appDb, IConfiguration configurati
         var user = new Entities.DbSchemas.User
         {
             Id = Guid.NewGuid().ToString(),
-            UserName = Guid.NewGuid().UniqueId(10),
+            UserName = "user" + Guid.NewGuid().UniqueId(5).ToLower(),
             Email = email,
             Name = fullName,
             ImageUrl = imageUrl,
+            IsActive = true,
             //Email =  
             EmailConfirmed = true,
         };

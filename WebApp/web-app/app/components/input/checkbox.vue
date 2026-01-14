@@ -54,9 +54,9 @@ export default {
       
       this.isLoading = true;
       this.debounce = setTimeout(() => {
-        this.$api.getList(this.source || 'Personnels', filters,['*'] , 1, 20, [`${(this.textField || 'Label')} asc`]).then((resp) => {
-          this.list = resp.data.data;
-        }).finally(() => this.isLoading = false);
+        // this.$api.getList(this.source || 'Personnels', filters,['*'] , 1, 20, [`${(this.textField || 'Label')} asc`]).then((resp) => {
+        //   this.list = resp.data.data;
+        // }).finally(() => this.isLoading = false);
           
         clearTimeout(this.debounce);
       }, 200)

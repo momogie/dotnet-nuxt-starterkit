@@ -1,55 +1,53 @@
-﻿//using Microsoft.AspNetCore.Authorization;
-//using Microsoft.AspNetCore.Mvc;
-//using Modules.Identity.Api.Role.Command;
-//using Modules.Identity.Entities;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Modules.Identity.Api.Role.Command;
+using Modules.Identity.Entities;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
-//namespace Modules.Identity.Api.Role.Handler;
+namespace Modules.Identity.Api.Role.Handler;
 
-//[Authorize]
-//[Post("/api/identity/user/role/create")]
-//public class UserRoleCreateHandler(AppDbContext appDb, [FromBody] UserRoleCommand command) : CommandHandler
-//{
-//    protected Entities.DbSchemas.Role Data;
+[Authorize]
+[Post("/api/identity/role/create")]
+public class UserRoleCreateHandler(AppDbContext appDb, [FromBody] UserRoleCommand command) : CommandHandler
+{
+    protected Entities.DbSchemas.Role Data;
 
-//    [Pipeline(1)]
-//    public void Save()
-//    {
-//        Data = new Entities.DbSchemas.Role
-//        {
-//            Name = command.Name,
-//            Description = command.Description,
-//        };
+    [Pipeline(1)]
+    public void BeginTran() => appDb.Database.BeginTransaction();
 
-//        appDb.Roles.Add(Data);
-//        appDb.SaveChanges();
-//    }
+    [Pipeline(2)]
+    public void Save()
+    {
+        Data = new Entities.DbSchemas.Role
+        {
+            Id = Guid.NewGuid().UniqueId(10),
+            Name = command.Name,
+            //Description = command.Description,
+        };
 
-//    [Pipeline(2)]
-//    public void SavePrivileges()
-//    {
-//        if (command.Privileges == null)
-//            return;
+        appDb.Roles.Add(Data);
+        appDb.SaveChanges();
+    }
 
-//        //foreach (var r in command.Privileges)
-//        //{
-//        //    var priv = Privileges.PrivilegeList.FirstOrDefault(p => p.Id == r);
+    [Pipeline(2)]
+    public void SavePrivileges()
+    {
+        if (command.Claims == null)
+            return;
 
-//        //    if (priv == null)
-//        //        continue;
+        appDb.RoleClaims.AddRange(command.Claims.Select(p => new RoleClaim
+        {
+            ClaimType = p.Type,
+            ClaimValue = p.Value,
+            RoleId = Data.Id,
+        }));
 
-//        //    var data = new UserRolePrivilege
-//        //    {
-//        //        FeatureId = r,
-//        //        FeatureGroup = priv.Group,
-//        //        RoleId = Result.Id,
-//        //    };
+        appDb.SaveChanges();
+    }
 
-//        //    AppDb.UserRolePrivileges.Add(data);
-//        //}
+    [Pipeline(4)]
+    public void CommitTran() => appDb.Database.CommitTransaction();
 
-//        //AppDb.SaveChanges();
-//    }
+    public override Entities.DbSchemas.Role Response() => Data;
 
-//    public override Entities.DbSchemas.Role Response() => Data;
-
-//}
+}

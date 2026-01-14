@@ -17,7 +17,7 @@ defineProps({
       <DropdownMenuGroup>
         <template v-for="(item, i) in list">
           <DropdownMenuItem v-if="item.type == 'page'"
-            @click="() => $router.push('/app/' + ($route.params.id || $route.query.organizationid) + item.link)">
+            @click="() => $router.push(item.link)">
             <!-- <User class="mr-2 h-4 w-4" /> -->
             <Icon :name="item.icon" size="16" />
             <span>{{ item.label }}</span>
