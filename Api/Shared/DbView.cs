@@ -51,31 +51,31 @@ public class DbView
         }
     }
 
-    private string SqlBuilder<T>() where T : IDataTable
+    private string SqlBuilder<T>(string schema = "dbo") where T : IDataTable
     {
         var vwName = FormatViewName(typeof(T));
         if (Sql.TryGetValue(vwName, out string value))
             return value;
 
 
-        return Sql[vwName] = $"SELECT * FROM {vwName}";
+        return Sql[vwName] = $"SELECT * FROM [{schema}].{vwName}";
     }
 
     private static string FormatViewName(Type type)
     {
-        var c = type.Namespace.Replace("Module.", "").Replace(".Entities.Views", "").Replace(".", "_");
-        return $"{c}_{PluralizationProvider.Pluralize(type.Name)}";
+        //var c = type.Namespace.Replace("Module.", "").Replace(".Entities.Views", "").Replace(".", "_");
+        return $"{PluralizationProvider.Pluralize(type.Name)}";
     }
 
 
 
     #region New
 
-    private Parameter ParameterBuilder<T>(RequestParameter parameter) where T : IDataTable
+    private Parameter ParameterBuilder<T>(RequestParameter parameter, string schema="dbo") where T : IDataTable
     {
         var notMappedProps = typeof(T).GetProperties().Where(p => p.GetCustomAttribute<NotMappedAttribute>() != null);
 
-        string sql = SqlBuilder<T>();
+        string sql = SqlBuilder<T>(schema);
         StringBuilder sb = new();
         sb.Append(sql);
         sb.Append(" ");
@@ -481,6 +481,54 @@ public class DbView
     {
         var method = typeof(DbView).GetMethod("ParameterBuilder", BindingFlags.NonPublic | BindingFlags.Instance);
         var data = method.MakeGenericMethod(type).Invoke(this, [param]) as Parameter;
+
+        DataHeaders.TryGetValue(type, out List<DataHeader> headers);
+        if (headers == null)
+        {
+            headers = [..type.GetProperties().Where(p => p.GetCustomAttribute<DataColumnAttribute>() != null).Select(p => new DataHeader
+            {
+                PropertyName = p.Name,
+                PropertyType = Nullable.GetUnderlyingType(p.PropertyType) != null ? $"{Nullable.GetUnderlyingType(p.PropertyType).Name}?"
+                    : p.PropertyType.Name,
+                Label = p.GetCustomAttribute<DataColumnAttribute>()?.Name ?? p.Name,
+                Attribute = new
+                {
+                    p.GetCustomAttribute<DataColumnAttribute>()?.Name,
+                    p.GetCustomAttribute<DataColumnAttribute>()?.Description,
+                    p.GetCustomAttribute<DataColumnAttribute>()?.Type,
+                    p.GetCustomAttribute<DataColumnAttribute>()?.IsSortable,
+                    IsDateTime = p.GetCustomAttribute<DateTimeAttribute>() != null,
+                    IsDate = p.GetCustomAttribute<DateAttribute>() != null
+                },
+                Filter = p.GetCustomAttribute<FilterableAttribute>() != null ? new
+                {
+                    p.GetCustomAttribute<FilterableAttribute>()?.Property,
+                    p.GetCustomAttribute<FilterableAttribute>()?.Type,
+                    p.GetCustomAttribute<FilterableAttribute>()?.DataSource,
+                    p.GetCustomAttribute<FilterableAttribute>()?.DataSourceKey,
+                    p.GetCustomAttribute<FilterableAttribute>()?.DataSourceValue,
+                } : null,
+            })];
+        }
+
+        data.Sql = data.Sql.Replace("1=1  AND", "");
+        data.SqlForFilteredCount = data.SqlForFilteredCount.Replace("1=1  AND", "");
+        var items = Connection.QueryAsync(type: type, data.Sql, data.Payload).Result.ToList();
+        return new DataResult<object>
+        {
+            Headers = headers,
+            Items = items,
+            Length = param.Length.Value,
+            Page = param.Page.Value,
+            Parameter = param,
+            Filtered = Connection.ExecuteScalar<int>(data.SqlForFilteredCount, data.Payload, Transaction),
+        };
+    }
+
+    public DataResult<object> Filter(string schema, Type type, RequestParameter param)
+    {
+        var method = typeof(DbView).GetMethod("ParameterBuilder", BindingFlags.NonPublic | BindingFlags.Instance);
+        var data = method.MakeGenericMethod(type).Invoke(this, [param, schema]) as Parameter;
 
         DataHeaders.TryGetValue(type, out List<DataHeader> headers);
         if (headers == null)

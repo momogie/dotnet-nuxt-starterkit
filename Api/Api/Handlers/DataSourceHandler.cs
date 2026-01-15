@@ -6,11 +6,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Api.Handlers;
 
-//[Authorize]
+[Authorize]
 [Post("/api/data-source")]
 public class DataSourceHandler([FromServices]AppDbContext appDb, [FromBody] DataSourceRequest request) : CommandHandler
 {
     protected Type Type { get; set; }
+    protected string Schema { get; set; }
 
     public override JsonSerializerSettings JsonSerializerSettings
     {
@@ -47,13 +48,14 @@ public class DataSourceHandler([FromServices]AppDbContext appDb, [FromBody] Data
             return NotFound();
 
         Type = value.type;
+        Schema = value.schema;
 
         return await Next();
     }
 
     public override DataResult<object> Response()
     {
-        var result = appDb.Views.Filter(Type, request);
+        var result = appDb.Views.Filter(Schema, Type, request);
         return result;
     }
 }

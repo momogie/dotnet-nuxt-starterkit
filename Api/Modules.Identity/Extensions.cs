@@ -96,7 +96,6 @@ public static class Extensions
         {
             MinimumSameSitePolicy = SameSiteMode.None
         });
-        //app.UseApiDocumentation();
         app.MapCommandHandlers(typeof(Extensions).Assembly);
         app.UseAuthentication();
         app.UseAuthorization();
@@ -108,7 +107,6 @@ public static class Extensions
         db.InitializeViews();
         var name = typeof(Extensions).Namespace;
         foreach (Type r in typeof(Extensions).Assembly.GetExportedTypes().Where(p => p.GetCustomAttributes(true).Any(c => c.GetType() == typeof(SqlView))))
-            ModuleDbContext.RegisterView("", r, []);
-
+            ModuleDbContext.RegisterView("Idp", r, []);
     }
 }

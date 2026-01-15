@@ -26,7 +26,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
 
     public DbView Views => new (this, "");
 
-    private string Schema => "Idp";
+    private static string Schema => "Idp";
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -57,8 +57,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
     }
     private static string FormatViewName(Type type)
     {
-        var c = type.Namespace.Replace("Module.", "").Replace(".Entities.Views", "").Replace(".", "_");
-        return $"{c}_{PluralizationProvider.Pluralize(type.Name)}";
+        //var c = type.Namespace.Replace("Module.", "").Replace(".Entities.Views", "").Replace(".", "_");
+        return $"{PluralizationProvider.Pluralize(type.Name)}";
     }
 
     public void InitializeViews()
@@ -75,7 +75,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
             var sqlLines = System.IO.File.ReadAllLines(fileNames, Encoding.UTF8);
             var sql = string.Join(Environment.NewLine, sqlLines);
 
-            Database.ExecuteSqlRaw($"CREATE OR ALTER VIEW {FormatViewName(r)} AS {sql}");
+            Database.ExecuteSqlRaw($"CREATE OR ALTER VIEW {Schema}.{FormatViewName(r)} AS {sql}");
         }
     }
 }

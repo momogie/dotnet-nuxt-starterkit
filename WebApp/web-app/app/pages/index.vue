@@ -33,32 +33,6 @@ definePageMeta({
 <template>
   <SidebarProvider>
     <SidebarInset>
-      <header class="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 border-b">
-        <div class="flex items-center gap-2 px-4 w-full">
-          <!-- <SidebarTrigger class="-ml-1" />
-          <Separator
-            orientation="vertical"
-            class="mr-2 data-[orientation=vertical]:h-4"
-          /> -->
-          <div class="flex-1">
-            <Breadcrumb class="flex-1">
-              <BreadcrumbList>
-                <BreadcrumbItem class="hidden md:block">
-                  <BreadcrumbLink href="#">
-                    Identity Service
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <!-- <BreadcrumbSeparator class="hidden md:block" />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                </BreadcrumbItem> -->
-              </BreadcrumbList>
-            </Breadcrumb>
-          </div>
-          <b-theme-switcher />
-          <b-header-user-info></b-header-user-info>
-        </div>
-      </header>
       <div class="mt-10">
         <div class="flex items-center justify-between ms-5">
           <div class="space-y-1">

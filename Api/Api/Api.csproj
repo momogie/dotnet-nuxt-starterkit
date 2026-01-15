@@ -15,7 +15,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Modules.Identity\Modules.Identity.csproj" />
 		<ProjectReference Include="..\Shared\Shared.csproj" />
-		<ProjectReference Include="..\Logger\Logger.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -31,9 +31,10 @@ import {
 
 const { isMobile } = useSidebar()
 const list = [
-  {name: 'User Managements', url: '/app/user-management/user', icon: UserCog},
-  {name: 'Settings', url: '/app/setting', icon: Cog},
-  {name: 'Logs', url: '/app/log', icon: FileText},
+  {name: 'User Managements', url: '/admin-console/user-management/user', icon: UserCog},
+  {name: 'Settings', url: '/admin-console/setting', icon: Cog},
+  {name: 'Report Schemas', url: '/admin-console/setting', icon: Cog},
+  {name: 'Logs', url: '/admin-console/log', icon: FileText},
 ]
 </script>
 
