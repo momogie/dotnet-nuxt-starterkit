@@ -67,7 +67,7 @@ export default {
                 })
                 .catch(err => {
                   if(err.response) {
-                    this.$swal.error('Failed!', err.response?.data)
+                    this.$swal.error('Failed!', err.response?.data?.Message)
                   }
                   reject()
                 })

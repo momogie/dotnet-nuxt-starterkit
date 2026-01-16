@@ -15,6 +15,9 @@ public class UserActivationHandler(AppDbContext appDb,
         if (Data == null)
             return NotFound();
 
+        if (Data.Id == UserId)
+            return Invalid(code: "FORBIDDEN", message: "Can't deactivate your self!");
+
         return await Next();
     }
 
