@@ -6,10 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Modules.Logger.Entities;
 using Modules.Logger.Entities.DbSchema;
 using Newtonsoft.Json;
-using System;
 using System.Collections;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
 using System.Reflection;
 
 namespace Modules.Logger;
@@ -245,11 +243,11 @@ public class DataLogger(LogDbContext db, IHttpContextAccessor contextAccessor) :
 
 public static class DataLoggerExtension
 {
-    public static void AddDataLogger(this IServiceCollection services, Action<DbContextOptionsBuilder> optionsAction = null)
-    {
-        services.AddDbContext<LogDbContext>(optionsAction);
-        services.AddScoped<IDataLogger, DataLogger>();
-    }
+    //public static void AddDataLogger(this IServiceCollection services, Action<DbContextOptionsBuilder> optionsAction = null)
+    //{
+    //    services.AddDbContext<LogDbContext>(optionsAction);
+    //    services.AddScoped<IDataLogger, DataLogger>();
+    //}
 
     public static string GetDefaultName(this PropertyInfo property)
     {
@@ -257,84 +255,19 @@ public static class DataLoggerExtension
         return attr == null ? property.Name : attr.Name;
     }
 
-    public static void UseDataLogger(this WebApplication app)
-    {
-        var scope = app.Services.CreateScope();
-        var appDb = scope.ServiceProvider.GetRequiredService<LogDbContext>();
-        appDb.Database.Migrate();
+    //public static void UseDataLogger(this WebApplication app)
+    //{
+    //    var scope = app.Services.CreateScope();
+    //    var appDb = scope.ServiceProvider.GetRequiredService<LogDbContext>();
+    //    appDb.Database.Migrate();
 
-        UseErrorLogger(app);
-    }
+    //    UseErrorLogger(app);
+    //}
 
-    private static void UseErrorLogger(WebApplication app)
-    {
-        app.UseExceptionHandler(a => a.Run(async context =>
-        {
-            var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
-            var exception = exceptionHandlerPathFeature.Error;
-
-            try
-            {
-                var logDb = context.RequestServices.GetRequiredService<LogDbContext>();
-                var contextAccessor = context.RequestServices.GetRequiredService<IHttpContextAccessor>();
-
-                var userName = contextAccessor.HttpContext?.User?.Claims?.FirstOrDefault(p => p.Type == "UserName")?.Value ?? "";
-                var name = contextAccessor.HttpContext?.User?.Claims?.FirstOrDefault(p => p.Type == "Name")?.Value ?? "";
-                _ = long.TryParse(contextAccessor.HttpContext?.User?.Claims?.FirstOrDefault(p => p.Type == "UserId")?.Value ?? "0", out var userId);
-                
-                var allowedNamespaces = new[] { "Web", "Entities", "Logger" };
-                var filteredInnerStackTrace = new StackTrace(exception?.InnerException, true)
-                    .GetFrames()
-                    ?.Where(frame =>
-                        allowedNamespaces.Any(ns =>
-                            frame.GetMethod()?.DeclaringType?.Namespace?.StartsWith(ns) == true))
-                    .Select(frame => frame.ToString())
-                    .ToArray();
-
-                var filteredStackTrace = new StackTrace(exception, true)
-                    .GetFrames()
-                    ?.Where(frame =>
-                        allowedNamespaces.Any(ns =>
-                            frame.GetMethod()?.DeclaringType?.Namespace?.StartsWith(ns) == true))
-                    .Select(frame => frame.ToString())
-                    .ToArray();
-
-                var errLog = new ErrorLog
-                {
-                    Date = DateTime.Now,
-                    Message = exception?.InnerException?.Message ?? exception.Message,
-                    Method = context.Request.Method,
-                    UserAgent = context.Request.Headers.UserAgent.ToString(),
-                    RemoteAddr = context.Connection.RemoteIpAddress.MapToIPv4().ToString(),
-                    RequestPath = context.Request.Path,
-                    StackTrace = exception?.InnerException != null ? 
-                        string.Join(Environment.NewLine, filteredInnerStackTrace) : 
-                        string.Join(Environment.NewLine, filteredStackTrace),
-                    //StackTrace = exception?.InnerException?.StackTrace ?? exception.StackTrace,
-                    UserId = userId,
-                    UserName = userName,
-                    Name = name,
-                };
-                logDb.ErrorLogs.Add(errLog);
-                logDb.SaveChanges();
-            }
-            catch { }
-
-            var result = JsonConvert.SerializeObject(new
-            {
-                Title = "Error",
-#if DEBUG
-                Message = exception?.InnerException?.Message ?? exception.Message,
-                StackTrace = exception?.InnerException?.StackTrace.Split(Environment.NewLine) ?? exception.StackTrace.Split(Environment.NewLine),
-#endif
-                Errors = new { }
-            });
-
-            context.Response.ContentType = "application/json";
-
-            await context.Response.WriteAsync(result);
-        }));
-    }
+    //private static void UseErrorLogger(WebApplication app)
+    //{
+        
+    //}
 }
 
 public class DataLogDto

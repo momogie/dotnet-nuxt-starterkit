@@ -6,11 +6,11 @@ namespace Shared;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddDatabaseContext<T>(this IServiceCollection services) where T : ModuleDbContext
+    public static IServiceCollection AddDatabaseContext<T>(this IServiceCollection services, string connectionName) where T : ModuleDbContext
     {
         using var scope = services.BuildServiceProvider().CreateScope();
         var config = scope.ServiceProvider.GetRequiredService<IConfiguration>();
-        var connectionString = config.GetConnectionString("Default");
+        var connectionString = config.GetConnectionString(connectionName);
         services.AddMSSQL<T>(connectionString);
         return services;
     }
@@ -26,7 +26,9 @@ public static class ServiceCollectionExtensions
             dbContext.Database.Migrate();
         }
 #if DEBUG
-        catch(Exception ex) { Console.WriteLine(ex); }
+        catch(Exception ex) { 
+            Console.WriteLine(ex); 
+        }
 #else
         catch { }
 #endif

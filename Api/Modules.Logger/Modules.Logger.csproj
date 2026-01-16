@@ -27,4 +27,15 @@
 		<Content Include="Views\*.sql" CopyToOutputDirectory="Always" CopyToPublishDirectory="PreserveNewest" TargetPath="$(ProjectName)/Views/%(Filename)%(Extension)" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Content Include="Entities\Views\ErrorLogView.sql" TargetPath="$(ProjectName)\Entities\Views\%(RecursiveDir)%(Filename)%(Extension)">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </Content>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Shared\Shared.csproj" />
+	</ItemGroup>
+
 </Project>

@@ -33,7 +33,8 @@ const app = useApp();
 </script>
 
 <template>
-  <SidebarProvider>
+  <div>
+    <SidebarProvider>
     <AppSidebar />
     <SidebarInset>
       <header class="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 border-b">
@@ -68,4 +69,5 @@ const app = useApp();
       </div>
     </SidebarInset>
   </SidebarProvider>
+  </div>
 </template>

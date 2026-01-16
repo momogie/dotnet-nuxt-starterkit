@@ -11,8 +11,12 @@ namespace Modules.Logger.Entities.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "Log");
+
             migrationBuilder.CreateTable(
                 name: "DataChangeLogs",
+                schema: "Log",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -39,16 +43,17 @@ namespace Modules.Logger.Entities.Migrations
 
             migrationBuilder.CreateTable(
                 name: "ErrorLogs",
+                schema: "Log",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Date = table.Column<long>(type: "bigint", nullable: false),
                     Message = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Level = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     StackTrace = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     InnerStackTrace = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<long>(type: "bigint", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     UserAgent = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -68,10 +73,12 @@ namespace Modules.Logger.Entities.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "DataChangeLogs");
+                name: "DataChangeLogs",
+                schema: "Log");
 
             migrationBuilder.DropTable(
-                name: "ErrorLogs");
+                name: "ErrorLogs",
+                schema: "Log");
         }
     }
 }

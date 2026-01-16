@@ -1,19 +1,29 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Shared;
 using System.ComponentModel.DataAnnotations;
 
-namespace Modules.Logger.Entities.DbSchema;
+namespace Modules.Logger.Entities.Views;
 
-public class ErrorLog
+[SqlView]
+public class ErrorLogView : IDataTable
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public long Id { get; set; }
 
+    [Filterable]
+    [DataColumn(Name = "Date")]
     public long Date { get; set; }
 
+    [Filterable]
+    [DataColumn(Name = "UserName")]
+    public string UserName { get; set; }
+
+    [Filterable]
+    [DataColumn(Name = "Name")]
+    public string Name { get; set; }
+
+    [Filterable]
+    [DataColumn(Name = "Message")]
     public string Message { get; set; }
 
-    [MaxLength(255)]
     public string Level { get; set; }
 
     public string StackTrace { get; set; }
@@ -22,23 +32,20 @@ public class ErrorLog
 
     public string UserId { get; set; }
 
-    [MaxLength(255)]
-    public string UserName { get; set; }
-
-    [MaxLength(255)]
-    public string Name { get; set; }
-
     public string UserAgent { get; set; }
 
-    [MaxLength(255)]
+    [Filterable]
+    [DataColumn(Name = "Remote Addr")]
     public string RemoteAddr { get; set; }
 
     public int StatusCode { get; set; }
 
-    [MaxLength(10)]
+    [Filterable]
+    [DataColumn(Name = "Method")]
     public string Method { get; set; }
 
-    [MaxLength(2000)]
+    [Filterable]
+    [DataColumn(Name = "Request Path")]
     public string RequestPath { get; set; }
 
     public long ElapsedMilliseconds { get; set; }

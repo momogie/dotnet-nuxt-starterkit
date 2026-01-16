@@ -14,6 +14,15 @@ export default defineNuxtConfig({
   app: {
     head: {
       title: 'Starter'
+    },
+    pageTransition: { name: 'page', mode: 'out-in' },
+    layoutTransition: { name: 'layout', mode: 'out-in' },
+  
+    // Page loading indicator
+    spaLoaderAttrs: {
+      class: 'my-loader',
+      'data-test': 'loader',
+      style: 'background-color: #29d; height: 4px;'
     }
   },
   modules: [

@@ -58,7 +58,7 @@ public abstract class ModuleDbContext : DbContext
             var sql = string.Join(Environment.NewLine, sqlLines);
 
 
-            Views.Execute($"CREATE OR ALTER VIEW {PluralizationProvider.Pluralize(r.Name)} AS {sql}");
+            Views.Execute($"CREATE OR ALTER VIEW [{Schema}].{PluralizationProvider.Pluralize(r.Name)} AS {sql}");
         }
     }
 

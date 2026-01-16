@@ -78,7 +78,7 @@ public class SignInModel(IConfiguration configuration, AppDbContext appDb) : Pag
             new("UserId", user.Id.ToString()),
             new("Email", user.Email ?? "-"),
             new("UserName", Username),
-            //new("Name", user.Name),
+            new("Name", user.Name),
         };
 
         // Create identity and sign in

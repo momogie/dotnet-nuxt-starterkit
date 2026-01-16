@@ -13,7 +13,10 @@
   </ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\Modules.Common\Modules.Common.csproj" />
 		<ProjectReference Include="..\Modules.Identity\Modules.Identity.csproj" />
+		<ProjectReference Include="..\Modules.Logger\Modules.Logger.csproj" />
+		<ProjectReference Include="..\Modules.Reporting\Modules.Reporting.csproj" />
 		<ProjectReference Include="..\Shared\Shared.csproj" />
 	</ItemGroup>
 

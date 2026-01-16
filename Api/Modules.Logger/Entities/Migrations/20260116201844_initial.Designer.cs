@@ -12,7 +12,7 @@ using Modules.Logger.Entities;
 namespace Modules.Logger.Entities.Migrations
 {
     [DbContext(typeof(LogDbContext))]
-    [Migration("20260115044834_initial")]
+    [Migration("20260116201844_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -20,6 +20,7 @@ namespace Modules.Logger.Entities.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("Log")
                 .HasAnnotation("ProductVersion", "10.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
@@ -87,7 +88,7 @@ namespace Modules.Logger.Entities.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DataChangeLogs");
+                    b.ToTable("DataChangeLogs", "Log");
                 });
 
             modelBuilder.Entity("Modules.Logger.Entities.DbSchema.ErrorLog", b =>
@@ -98,8 +99,8 @@ namespace Modules.Logger.Entities.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                    b.Property<long>("Date")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("ElapsedMilliseconds")
                         .HasColumnType("bigint");
@@ -139,8 +140,8 @@ namespace Modules.Logger.Entities.Migrations
                     b.Property<string>("UserAgent")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("UserId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(255)
@@ -148,7 +149,7 @@ namespace Modules.Logger.Entities.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ErrorLogs");
+                    b.ToTable("ErrorLogs", "Log");
                 });
 #pragma warning restore 612, 618
         }

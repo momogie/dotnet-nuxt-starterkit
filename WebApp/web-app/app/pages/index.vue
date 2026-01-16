@@ -31,7 +31,8 @@ definePageMeta({
 </script>
 
 <template>
-  <SidebarProvider>
+  <div>
+    <SidebarProvider>
     <SidebarInset>
       <div class="mt-10">
         <div class="flex items-center justify-between ms-5">
@@ -66,4 +67,5 @@ definePageMeta({
       </div>
     </SidebarInset>
   </SidebarProvider>
+  </div>
 </template>

@@ -78,7 +78,7 @@ public class GoogleSignInCallback(AppDbContext appDb, IConfiguration configurati
             new("UserId", user.Id.ToString()),
             new("Email", user.Email ?? "-"),
             new("UserName", user.UserName),
-            //new("Name", user.Name),
+            new("Name", user.Name),
         };
 
         // Create identity and sign in

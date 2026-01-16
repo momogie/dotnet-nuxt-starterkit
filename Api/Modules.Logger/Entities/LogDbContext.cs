@@ -1,16 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Modules.Logger.Entities.DbSchema;
+using Shared;
 using System.Data;
 
 namespace Modules.Logger.Entities;
 
-public class LogDbContext(DbContextOptions options) : DbContext(options)
+public class LogDbContext(DbContextOptions<LogDbContext> options) : ModuleDbContext(options)
 {
     public DbSet<DataChangeLog> DataChangeLogs { get; set; }
     public DbSet<ErrorLog> ErrorLogs { get; set; }
-
-    private static string Schema => "Log";
+    public override string Schema => "Log";
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -19,7 +19,6 @@ public class LogDbContext(DbContextOptions options) : DbContext(options)
 
         base.OnModelCreating(builder);
     }
-
 }
 
 public class LogDbContextFactory : IDesignTimeDbContextFactory<LogDbContext>
