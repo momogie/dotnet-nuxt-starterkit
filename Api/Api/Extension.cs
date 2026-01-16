@@ -59,6 +59,7 @@ public static class Extension
         services.AddHttpContextAccessor();
         services.AddCronManager();
         services.AddMailer(configuration);
+        services.AddShared(configuration);
         services.AddModuleIdentity(configuration);
         //services.AddModuleConfiguration(configuration);
         return services;
@@ -71,6 +72,7 @@ public static class Extension
 
         app.MapCommandHandlers(typeof(Extension).Assembly);
         app.UseCronManager(config.GetConnectionString("Default"));
+        app.UseShared();
         app.UseModuleIdentity();
         //app.UseModuleConfiguration();
         return app;

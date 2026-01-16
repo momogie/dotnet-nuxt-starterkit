@@ -2,8 +2,6 @@ using Api;
 using Microsoft.EntityFrameworkCore;
 using Shared;
 
-
-
 var builder = WebApplication.CreateBuilder(args);
 var conn = builder.Configuration.GetConnectionString("Default");
 builder.Services.AddDbContextPool<AppDbContext>(p => p.UseSqlServer(builder.Configuration.GetConnectionString("Default")));

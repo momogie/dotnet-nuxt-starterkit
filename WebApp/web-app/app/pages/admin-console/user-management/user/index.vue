@@ -18,7 +18,7 @@
         { label: 'Delete', icon: 'ph:trash-bold', onClick: (v) => remove(v.Id)},
       ]"
       :configuration-pages="[
-        { type: 'page', link: '/app/user-management/role', label: 'Roles', icon: 'ph:tree-structure-bold' },
+        { type: 'page', link: '/admin-console/user-management/role', label: 'Roles', icon: 'ph:tree-structure-bold' },
       ]"
     />
     <Create />

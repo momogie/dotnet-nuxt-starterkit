@@ -8,9 +8,10 @@ public static class Extensions
 {
     public static IServiceCollection AddModuleIdentity(this IServiceCollection services, IConfiguration configuration)
     {
+        Configuration.AddModules(Permissions.Modules);
         services.AddDbContext<AppDbContext>(p => p.UseSqlServer(configuration.GetConnectionString("Identity")));
         services.AddRazorPages()
-                .AddApplicationPart(typeof(Modules.Identity.Extensions).Assembly);
+                .AddApplicationPart(typeof(Extensions).Assembly);
 
         // JWT
         services

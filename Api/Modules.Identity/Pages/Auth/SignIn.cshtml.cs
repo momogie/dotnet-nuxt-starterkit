@@ -1,19 +1,11 @@
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Modules.Identity.Entities;
-using Modules.Identity.Entities.DbSchemas;
-using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
 namespace Identity.Pages.Auth;
 
-public class SignInModel(IConfiguration configuration, AppDbContext appDb, IMailer mailer) : PageModel
+public class SignInModel(IConfiguration configuration, AppDbContext appDb) : PageModel
 {
     [Required]
     [BindProperty]

@@ -6,23 +6,6 @@ namespace Shared;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddShared(this IServiceCollection services, IConfiguration config)
-    {
-        services.AddHttpContextAccessor();
-        services.AddControllers().AddJsonOptions(opt =>
-        {
-            opt.JsonSerializerOptions.PropertyNamingPolicy = null;
-            //opt.JsonSerializerOptions.Converters.Add(new EpochDateTimeConverter());
-        })
-        .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
-        // Configure JSON options to use PascalCase
-        services.ConfigureHttpJsonOptions(options =>
-        {
-            options.SerializerOptions.PropertyNamingPolicy = null;
-        });
-        return services;
-    }
-
     public static IServiceCollection AddDatabaseContext<T>(this IServiceCollection services) where T : ModuleDbContext
     {
         using var scope = services.BuildServiceProvider().CreateScope();

@@ -5,7 +5,7 @@ using System.Security.Claims;
 namespace Modules.Identity.Api.Auth.Handlers;
 
 [Get("/auth/google/signin")]
-public class GoogleSignIn(AppDbContext appDb, IConfiguration configuration) : CommandHandler
+public class GoogleSignIn(IConfiguration configuration) : CommandHandler
 {
     public override IResult Response()
     {

@@ -8,9 +8,9 @@
 
 definePageMeta({
   middleware: [ 'user' ],
-  // pageTransition: {
-  //   name: "zoom",
-  //   mode: "out-in"
-  // },
+  pageTransition: {
+    name: "zoom",
+    mode: "out-in"
+  },
 })
 </script>

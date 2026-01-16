@@ -7,17 +7,24 @@
     :is-loading="isLoading"
   >
     <form>
+      <!-- <pre>{{ model }}</pre> -->
       <input-text label="Name *" v-model="model.Name" :errors="errors?.Name" />
+      <Permission class="-mx-4 mt-5" 
+        v-model="model.Claims"
+      />
     </form>
   </b-modal>
 </template>
 
 <script>
+import Permission from './permission-list.x.vue'
 export default {
+  components: {Permission },
   data: () => ({
     isLoading: false,
     model: {
       Name: null,
+      Claims: [],
     },
     errors: {},
   }),

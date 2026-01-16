@@ -12,10 +12,8 @@ using Modules.Identity.Entities;
 namespace Modules.Identity.Entities.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260114155916_initial")]
-#pragma warning disable CS8981 // The type name only contains lower-cased ascii characters. Such names may become reserved for the language.
-    partial class initial
-#pragma warning restore CS8981 // The type name only contains lower-cased ascii characters. Such names may become reserved for the language.
+    [Migration("20260116113759_update-userrole")]
+    partial class updateuserrole
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -174,10 +172,6 @@ namespace Modules.Identity.Entities.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<string>("RoleId")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");

@@ -609,7 +609,7 @@ public class DbView
             var a = prop.GetValue(param);
             requestParam.AddFilter(prop.Name, "=", a);
         }
-        var data = ParameterBuilder<T>(requestParam);
+        var data = ParameterBuilder<T>(requestParam, Schema);
         return await Connection.QueryFirstOrDefaultAsync<T>(data.Sql, data.Payload, Transaction);
     }
 

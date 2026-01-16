@@ -1,9 +1,9 @@
-<script lang="ts">
+<!-- <script lang="ts">
 export const description
   = "A sidebar that collapses to icons."
 export const iframeHeight = "800px"
 export const containerClass = "w-full h-full"
-</script>
+</script> -->
 
 <script setup lang="ts">
 import AppSidebar from '~/components/shadcn/AppSidebar.vue'
@@ -21,15 +21,15 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@/components/shadcn/components/ui/sidebar'
-const app = useApp();
 
-definePageMeta({
-  middleware: [ 'user' ],
-  // pageTransition: {
-  //   name: "zoom",
-  //   mode: "out-in"
-  // },
-})
+// definePageMeta({
+//   middleware: [ 'user' ],
+//   // pageTransition: {
+//   //   name: "zoom",
+//   //   mode: "out-in"
+//   // },
+// })
+const app = useApp();
 </script>
 
 <template>

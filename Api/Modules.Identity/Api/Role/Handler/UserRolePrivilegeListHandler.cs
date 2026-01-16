@@ -1,14 +1,11 @@
-﻿//using Modules.Identity.Api.Role.Command;
-//using PropHub.Entities;
+﻿using Modules.Identity.Api.Role.Command;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
-//namespace Modules.Identity.Api.Role.Handler;
+namespace Modules.Identity.Api.Role.Handler;
 
-//[CommandHandler("/api/user/role/privilege-list", CommandMethod.Get, true)]
-//public class UserRolePrivilegeListHandler : BaseCommandHandler<List<UserRolePrivilegeCommand>>
-//{
-//    [CommandPipeline]
-//    public void Load()
-//    {
-//        Result = Privileges.PrivilegeList;
-//    }
-//}
+//[Authorize]
+[Get("/api/identity/role/permissions")]
+public class UserRolePrivilegeListHandler : CommandHandler
+{
+    public override List<AppModule> Response() => Configuration.Modules;
+}

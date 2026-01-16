@@ -24,7 +24,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
     public override DbSet<UserRole> UserRoles { get; set; }
     public override DbSet<UserToken> UserTokens { get; set; }
 
-    public DbView Views => new (this, "");
+    public DbView Views => new (this, Schema);
 
     private static string Schema => "Idp";
 

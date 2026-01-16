@@ -1,4 +1,3 @@
 select
-	Users.*, Roles.Name RoleName
+	Users.*
 from Idp.Users 
-left join Idp.Roles on Roles.Id = Users.RoleId

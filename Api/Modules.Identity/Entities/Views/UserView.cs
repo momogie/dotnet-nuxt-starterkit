@@ -4,16 +4,12 @@
 public class UserView : IDataTable
 {
     public string Id { get; set; }
-    public string RoleId { get; set; }
     [Filterable]
     [DataColumn(Name = "Username")]
     public string UserName { get; set; }
     [Filterable]
     [DataColumn(Name = "Name")]
     public string Name { get; set; }
-    [Filterable]
-    [DataColumn(Name = "Role")]
-    public string RoleName { get; set; }
     public string ImageUrl { get; set; }
     public string NormalizedUserName { get; set; }
     [Filterable]

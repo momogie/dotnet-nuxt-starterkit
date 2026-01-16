@@ -14,7 +14,7 @@ using Microsoft.OpenApi;
 
 namespace Shared;
 
-public static class Extensions
+public static class CommandHandlerExtensions
 {
     public static void MapCommandHandlers(this WebApplication app, Assembly assembly)
     {
