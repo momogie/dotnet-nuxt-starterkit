@@ -28,6 +28,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Content Include="Entities\Views\DataChangeLogView.sql" TargetPath="$(ProjectName)\Entities\Views\%(RecursiveDir)%(Filename)%(Extension)">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </Content>
 	  <Content Include="Entities\Views\ErrorLogView.sql" TargetPath="$(ProjectName)\Entities\Views\%(RecursiveDir)%(Filename)%(Extension)">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

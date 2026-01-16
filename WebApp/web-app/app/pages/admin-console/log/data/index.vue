@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-grid
-      source="User"
+      source="DataChangeLog"
       :buttons="[
         // { type: 'separator', showOnChecked: true},
         // { label: 'DELETE', icon: 'ph:trash-bold', showOnChecked: true, onClick: remove},
