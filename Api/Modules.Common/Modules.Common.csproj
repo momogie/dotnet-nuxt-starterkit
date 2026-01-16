@@ -25,12 +25,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Content Remove="Entities\Views\ImportView.sql" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Folder Include="Api\Export\Commands\" />
 	  <Folder Include="Api\Export\Handlers\" />
 	  <Folder Include="Api\Import\Commands\" />
 	  <Folder Include="Api\Import\Handlers\" />
-	  <Folder Include="Entities\" />
-	  <Folder Include="Views\" />
 	</ItemGroup>
 
 

@@ -23,6 +23,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
     public override DbSet<UserLogin> UserLogins { get; set; }
     public override DbSet<UserRole> UserRoles { get; set; }
     public override DbSet<UserToken> UserTokens { get; set; }
+    public DbSet<Workspace> Workspaces { get; set; }
+    public DbSet<WorkspaceUser> WorkspaceUsers { get; set; }
 
     public DbView Views => new (this, Schema);
 

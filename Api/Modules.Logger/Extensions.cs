@@ -18,7 +18,7 @@ public static class Extensions
 {
     public static IServiceCollection AddModuleLogger(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDatabaseContext<LogDbContext>("Logger");
+        services.AddDatabaseContext<AppDbContext>("Logger");
         services.AddScoped<IDataLogger, DataLogger>();
         return services;
     }
@@ -38,7 +38,7 @@ public static class Extensions
 
             try
             {
-                var logDb = context.RequestServices.GetService<LogDbContext>();
+                var logDb = context.RequestServices.GetService<AppDbContext>();
                 var contextAccessor = context.RequestServices.GetRequiredService<IHttpContextAccessor>();
 
                 var userName = contextAccessor.HttpContext?.User?.Claims?.FirstOrDefault(p => p.Type == "UserName")?.Value ?? "";

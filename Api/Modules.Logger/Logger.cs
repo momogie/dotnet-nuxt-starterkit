@@ -24,7 +24,7 @@ public interface IDataLogger
 
 public interface IDataLog { }
 
-public class DataLogger(LogDbContext db, IHttpContextAccessor contextAccessor) : IDataLogger
+public class DataLogger(AppDbContext db, IHttpContextAccessor contextAccessor) : IDataLogger
 {
     protected HttpContext Context => contextAccessor.HttpContext;
 

@@ -3,6 +3,7 @@
 public class Configuration
 {
     public static List<AppModule> Modules { get; private set; } = [];
+    public static List<TransactionType> TransactionTypes { get; private set; } = [];
 
     public static void AddModule(AppModule module)
     {
@@ -55,6 +56,24 @@ public class Configuration
             Modules[modIdx].Features.Add(feature);
         }
     }
+
+    public static void AddTransactionTypes(IEnumerable<TransactionType> transactionTypes)
+    {
+        TransactionTypes.AddRange(transactionTypes);
+    }
+
+    public static void AddTransactionType(TransactionType transactionType)
+    {
+        TransactionTypes.Add(transactionType);
+    }
+}
+
+public class TransactionType
+{
+    public string Id { get; set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public string ModuleId { get; set; }
 }
 
 public class AppModule

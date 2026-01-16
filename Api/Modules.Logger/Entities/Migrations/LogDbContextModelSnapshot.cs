@@ -10,7 +10,7 @@ using Modules.Logger.Entities;
 
 namespace Modules.Logger.Entities.Migrations
 {
-    [DbContext(typeof(LogDbContext))]
+    [DbContext(typeof(AppDbContext))]
     partial class LogDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

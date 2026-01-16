@@ -31,6 +31,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Api\Workspace\" />
 	  <Folder Include="Properties\PublishProfiles\" />
 	</ItemGroup>
 

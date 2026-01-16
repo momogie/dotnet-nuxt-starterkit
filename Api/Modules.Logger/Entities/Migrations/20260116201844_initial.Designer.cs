@@ -11,7 +11,7 @@ using Modules.Logger.Entities;
 
 namespace Modules.Logger.Entities.Migrations
 {
-    [DbContext(typeof(LogDbContext))]
+    [DbContext(typeof(AppDbContext))]
     [Migration("20260116201844_initial")]
     partial class initial
     {

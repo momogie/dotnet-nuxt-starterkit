@@ -37,13 +37,17 @@ const props = defineProps<{
 
 const { isMobile } = useSidebar()
 const user = useUser();
+
+const goImportPage = () => location.href = '/app/import';
 </script>
 
 <template>
   <div>
     <NavSettings />
     <div class="p-2 pb-5">
-      <Button class="w-full">Import Data</Button>
+      <Button class="w-full" @click="goImportPage"> 
+        Import Data
+      </Button>
     </div>
     <SidebarMenu>
       <SidebarMenuItem>

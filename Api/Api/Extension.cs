@@ -17,8 +17,8 @@ public static class Extension
         services.AddMailer(configuration);
         services.AddShared(configuration);
         services.AddModuleLogger(configuration);
+        services.AddModuleCommon(configuration);
         services.AddModuleIdentity(configuration);
-        //services.AddModuleConfiguration(configuration);
         return services;
     }
 
@@ -31,6 +31,7 @@ public static class Extension
         app.UseCronManager(config.GetConnectionString("Default"));
         app.UseShared();
         app.UseModuleLogger();
+        app.UseModuleCommon();
         app.UseModuleIdentity();
         //app.UseModuleConfiguration();
         return app;
