@@ -1,26 +1,21 @@
 <template>
   <b-modal 
     id="create" 
-    title="Import Data" 
+    title="Add Report Template" 
     @hidden="hidden"
     @submit="submit" 
     :is-loading="isLoading"
   >
     <form>
-      <input-text label="Template *" v-model="model.Name" :errors="errors?.Name" />
-      <input-text label="File *" v-model="model.Name" :errors="errors?.Name" />
+      <input-combobox 
+        label="Data Source *" v-model="model.Name" :errors="errors?.Name" 
+      />
+      <input-text label="Data Source *" v-model="model.Name" :errors="errors?.Name" />
       <input-text label="Description *" v-model="model.Name" :errors="errors?.Name" 
         multiline
         rows="3"
       />
-      <div class="grid grid-cols-2 gap-4">
-      </div>
-      <div>
-        <Checkbox /> <span class="text-sm">Process in parallel.</span>
-      </div>
-      <div>
-        <Checkbox /> <span class="text-sm">Proceed with valid rows, ignore invalid rows.</span>
-      </div>
+      <input-attachment label="Template File *" v-model="model.Name" :errors="errors?.Name" />
     </form>
   </b-modal>
 </template>

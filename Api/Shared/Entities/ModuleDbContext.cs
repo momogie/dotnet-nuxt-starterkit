@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using PluralizeService.Core;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Text;
 
@@ -33,10 +34,11 @@ public abstract class ModuleDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        if (!string.IsNullOrWhiteSpace(Schema))
+        if (!string.IsNullOrWhiteSpace(Schema) && Schema != "dbo")
         {
             modelBuilder.HasDefaultSchema(Schema);
             modelBuilder.Ignore<__ReparationHistory>();
+            modelBuilder.Ignore<Attachment>();
         }
 
         base.OnModelCreating(modelBuilder);
@@ -73,6 +75,8 @@ public abstract class ModuleDbContext : DbContext
     public DbSet<__ReparationHistory> __ReparationHistories { get; set; }
 #pragma warning restore IDE1006 // Naming Styles
 
+    public DbSet<Attachment> Attachments { get; set; }
+
 }
 
 #pragma warning disable IDE1006 // Naming Styles
@@ -84,4 +88,42 @@ public class __ReparationHistory
     public string ReparationId { get; set; }
 
     public DateTimeOffset Timestamps { get; set; }
+}
+
+public class Attachment
+{
+    [Key]
+    public string Id { get; set; }
+
+    [MaxLength(200)]
+    public string FileName { get; set; }
+
+    [MaxLength(200)]
+    public string FileType { get; set; }
+
+    public double FileSize { get; set; }
+
+    [MaxLength(50)]
+    public string AttachmentId { get; set; }
+
+    public string DocumentId { get; set; }
+
+    [MaxLength(50)]
+    public string DocumentType { get; set; }
+
+    [MaxLength(20)]
+    public string Status { get; set; } = "Active";
+
+    [MaxLength(100)]
+    public string Key { get; set; }
+
+    [MaxLength(100)]
+    public string ThumbUrl { get; set; }
+
+    [MaxLength(20)]
+    public string Provider { get; set; }
+
+    public bool IsPublic { get; set; }
+
+    public string PublicUrl { get; set; }
 }

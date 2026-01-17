@@ -10,6 +10,10 @@
 	<PackageReference Include="AspNetCore.Scalar" Version="1.1.8" />
 	<PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.0" />
 	<PackageReference Include="Yarp.ReverseProxy" Version="2.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
 
 	<ItemGroup>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+﻿using Api.Entities;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Modules.Identity;
@@ -14,10 +15,10 @@ public static class Extension
     {
         services.AddHttpContextAccessor();
         services.AddCronManager();
-        services.AddMailer(configuration);
         services.AddShared(configuration);
         services.AddModuleLogger(configuration);
         services.AddModuleCommon(configuration);
+        services.AddModuleReporting(configuration);
         services.AddModuleIdentity(configuration);
         return services;
     }
@@ -26,12 +27,15 @@ public static class Extension
     {
         var scope = app.Services.CreateScope();
         var config = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        db.Database.Migrate();
 
         app.MapCommandHandlers(typeof(Extension).Assembly);
         app.UseCronManager(config.GetConnectionString("Default"));
         app.UseShared();
         app.UseModuleLogger();
         app.UseModuleCommon();
+        app.UseModuleReporting();
         app.UseModuleIdentity();
         //app.UseModuleConfiguration();
         return app;

@@ -1,9 +1,9 @@
 <template>
   <div>
     <b-grid
-      source="User"
+      source="Import"
       :buttons="[
-        { label: 'ADD NEW', icon: 'ph:plus', showOnChecked: false, onClick: create},
+        { label: 'IMPORT', icon: 'ph:plus', showOnChecked: false, onClick: create},
         // { type: 'separator', showOnChecked: true},
         // { label: 'DELETE', icon: 'ph:trash-bold', showOnChecked: true, onClick: remove},
       ]"
@@ -16,9 +16,6 @@
         { label: 'Deactivate', icon: 'ph:x-circle-bold', visible: (v) => v.IsActive, onClick: (v) => activate(v.Id, false)},
         { type: 'separator'},
         { label: 'Delete', icon: 'ph:trash-bold', onClick: (v) => remove(v.Id)},
-      ]"
-      :configuration-pages="[
-        { type: 'page', link: '/admin-console/user-management/role', label: 'Roles', icon: 'ph:tree-structure-bold' },
       ]"
     />
     <Create />

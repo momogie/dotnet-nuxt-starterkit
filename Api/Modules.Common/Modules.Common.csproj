@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
 
 	<ItemGroup>
@@ -19,20 +18,14 @@
 		<ProjectReference Include="..\Shared\Shared.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<Content Include="Entities\Views\*.sql" TargetPath="$(ProjectName)\Entities\Views\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="Always" CopyToPublishDirectory="PreserveNewest" />
-		<Content Include="Entities\Reparations\*.sql" TargetPath="$(ProjectName)\Entities\Reparations\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="Always" CopyToPublishDirectory="PreserveNewest" />
-	</ItemGroup>
+  <ItemGroup>
+    <Content Include="Entities\Views\*.sql" TargetPath="$(ProjectName)\Entities\Views\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="Always" CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="Entities\Reparations\*.sql" TargetPath="$(ProjectName)\Entities\Reparations\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="Always" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
 
-	<ItemGroup>
-	  <Content Remove="Entities\Views\ImportView.sql" />
-	</ItemGroup>
-
-	<ItemGroup>
+  <ItemGroup>
 	  <Folder Include="Api\Export\Commands\" />
 	  <Folder Include="Api\Export\Handlers\" />
-	  <Folder Include="Api\Import\Commands\" />
-	  <Folder Include="Api\Import\Handlers\" />
 	</ItemGroup>
 
 
